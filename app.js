@@ -1,4 +1,4 @@
-angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode'])
+angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode','cordovaDeviceModule'])
 
 .constant('fb', {
     url: 'https://feedmeweek5.firebaseio.com'
