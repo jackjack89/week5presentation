@@ -47,13 +47,6 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode'])
 })
 
 .controller("QRCodeCtrl", function ($scope, $firebaseArray, threadsRef) {
-    $scope.qrcodeString = 'business name here';
-    $scope.size = 250;
-    $scope.correctionLevel = '';
-    $scope.typeNumber = 0;
-    $scope.inputMode = '';
-    $scope.image = true;
-    
     $scope.threads = $firebaseArray(threadsRef);
     $scope.threads.$loaded().then(function (threads) {});
     $scope.createThread = function (username, title) {
@@ -65,9 +58,12 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode'])
 
 })
 
-.controller('threadCtrl', function ($scope, $firebaseArray, $firebaseObject, threadRef, commentsRef) {
+.controller('threadCtrl', function ($scope, $firebaseArray, $firebaseObject, $location, threadRef, commentsRef) {
     var thread = $firebaseObject(threadRef);
-    console.log("title is " + thread.title);
+    //    console.log(threadServ.getThread(thread.id));
+    //    console.log(thread);
+    $scope.currentLocation = $location.absUrl();
+    console.log($location.absUrl());
     thread.$bindTo($scope, 'thread');
     $scope.comments = $firebaseArray(commentsRef)
     $scope.createComment = function (username, text) {

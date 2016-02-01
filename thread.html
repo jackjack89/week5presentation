@@ -1,10 +1,11 @@
 <div>
     <h1>{{ thread.title }} (by {{ thread.username }})</h1>
     <p>
-    <h4>QR Code</h4>
-    <qrcode version="4" size="200" data="{{thread.title}}" href="{{thread.title}}"></qrcode>></qr>
+        <h4>QR Code</h4>
+        <!--    <qrcode version="4" size="200" data="{{thread.title}}" href="{{thread.title}}"></qrcode>></qr>-->
+        <qrcode version="40" size="200" data="{{currentLocation}}" href="{{currentLocation}}"></qrcode>></qr>
     </p>
-    
+
     <form name="newCommentForm">
         <input type="text" ng-model="newCommentText" placeholder="Write a comment..." required/>
         <input type="text" ng-model="username" placeholder="Username..." required/>
