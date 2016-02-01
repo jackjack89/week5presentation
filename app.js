@@ -63,7 +63,7 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode'])
     //    console.log(threadServ.getThread(thread.id));
     //    console.log(thread);
     $scope.currentLocation = $location.absUrl();
-    console.log(currentLocation);
+    //console.log(currentLocation);
     thread.$bindTo($scope, 'thread');
     $scope.comments = $firebaseArray(commentsRef)
     $scope.createComment = function (username, text) {
