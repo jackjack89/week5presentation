@@ -1,4 +1,17 @@
-angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'cordovaDeviceModule'])
+angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookies', 'angular-uuid']).run(function ($rootScope, $cookies, $window, uuid) {
+    $rootScope.cookie = $cookies.get('clientid');
+    // console.log(uuid.v4());
+    if ($rootScope.cookie === null) {
+        var now = new $window.Date();
+        exp = new $window.Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
+        var username = uuid.v4();
+        $cookies.put('clientid', username, {
+            expires: exp
+        });
+    }
+    $rootScope.cookie = $cookies.get('clientid');
+    console.log("cookie is " + $rootScope.cookie);
+})
 
 .constant('fb', {
     url: 'https://feedmeweek5.firebaseio.com'
@@ -41,15 +54,17 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'cordovaD
         })
 })
 
-.controller('threadsCtrl', function ($scope, $firebaseArray, threadsRef) {
+    .controller('threadsCtrl', function ($rootScope,$scope, $firebaseArray, threadsRef, $cookies, $window, uuid) {
     $scope.threads = $firebaseArray(threadsRef);
     $scope.threads.$loaded().then(function (threads) {});
 })
 
-.controller("QRCodeCtrl", function ($scope, $firebaseArray, threadsRef) {
+    .controller("QRCodeCtrl", function ($rootScope,$scope, $firebaseArray, threadsRef) {
     $scope.threads = $firebaseArray(threadsRef);
     $scope.threads.$loaded().then(function (threads) {});
-    $scope.createThread = function (username, title) {
+
+    $scope.createThread = function (title) {
+        var username = $rootScope.cookie;
         $scope.threads.$add({
             username: username,
             title: title
@@ -58,12 +73,13 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'cordovaD
 
 })
 
-.controller('threadCtrl', function ($scope, $firebaseArray, $firebaseObject, $location, threadRef, commentsRef) {
+    .controller('threadCtrl', function ($rootScope,$scope, $firebaseArray, $firebaseObject, $location, threadRef, commentsRef) {
     var thread = $firebaseObject(threadRef);
     $scope.currentLocation = $location.absUrl();
     thread.$bindTo($scope, 'thread');
     $scope.comments = $firebaseArray(commentsRef)
-    $scope.createComment = function (username, text) {
+    $scope.createComment = function (text) {
+        var username = $rootScope.cookie;
         $scope.comments.$add({
             username: username,
             text: text

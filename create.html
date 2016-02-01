@@ -1,11 +1,10 @@
-<div ng-controller="CordovaDeviceCtrl">
+<div>
     <form name="newThreadForm">
-        <input type="text" data-ng-model="qrcodeString" placeholder="New thread title..." required/>
-        <input type="text" ng-model="username" value="{{deviceService.uuid()}}" readonly/>
-        <button ng-click="createThread(username, qrcodeString)">Add Thread</button>
+        <input type="text" ng-model="title" placeholder="New thread title..." required/>
+        <input type="text" ng-model="cookie" readonly/>
+        <button ng-click="createThread(title)">Add Thread</button>
     </form>
     <p>
-        <!--        device UUID is {{deviceService.uuid()}}-->
-        device platform is {{deviceService.platform()}}
+        cookie is {{cookie}}
     </p>
 </div>
