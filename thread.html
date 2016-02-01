@@ -1,17 +1,56 @@
-<div>
-    <h1>{{ thread.title }} (by {{ thread.username }})</h1>
-    <p>
-        <h4>QR Code</h4>
-        <qrcode version="40" size="200" data="{{currentLocation}}" href="{{currentLocation}}"></qrcode>
-    <img src="food cloud.jpg" style="width:300px;height:200px;">>
-    </p>
-    <form name="newCommentForm">
-        <input type="text" ng-model="newCommentText" placeholder="Write a comment..." required/>
-        <input type="text" ng-model="cookie" readonly/>
-        <button ng-disabled="newCommentForm.$invalid" ng-click="createComment(newCommentText)">Add Comment</button>
-    </form>
+<style>
+    .forum.table > tbody > tr > td {
+        vertical-align: middle;
+    }
+    
+    .forum .fa {
+        width: 1em;
+        text-align: center;
+    }
+    
+    .forum.table th.cell-stat {
+        width: 6em;
+    }
+    
+    .forum.table th.cell-stat-2x {
+        width: 14em;
+    }
 
-    <ul>
-        <li ng-repeat="comment in comments">{{ comment.username }}: {{ comment.text }}</li>
-    </ul>
+</style>
+
+<div class="container" style="margin-top: 35px">
+    <div class="page-header page-heading">
+        <h1 class="pull-left">FeedMe v1.01</h1>
+        <div class="clearfix"></div>
+    </div>
+    <p class="lead">{{ thread.title }} (by {{ thread.username }})</p>
+    <table>
+        <tr>
+            <td>
+                <qrcode version="40" size="300" data="{{currentLocation}}" href="{{currentLocation}}"></qrcode>
+            </td>
+            <td>
+                <img src="food cloud.jpg" style="width:400px;height:300px;">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <p>Your annoymized ID is: {{cookie}}</p>
+    <form name="newCommentForm">
+        <div class="col-sm-12">
+            <textarea class="form-control" id="inputBody" ng-model="newCommentText" placeholder="Write a comment..." required rows="4"></textarea>
+        </div>
+        <br>
+        <div class="modal-footer">
+            <br>
+            <a href="javascript:history.back()" class="btn btn-default pull-right">Go Back</a>
+            <button class="btn btn-primary" ng-disabled="newCommentForm.$invalid" ng-click="createComment(newCommentText)">Add Comment</button>
+        </div>
+    </form>
+    <div>
+        <ul>
+            <li ng-repeat="comment in comments"><h4>{{ comment.username }}: {{ comment.text }}</h4></li>
+        </ul>
+    </div>
 </div>

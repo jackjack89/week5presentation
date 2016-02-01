@@ -1,7 +1,54 @@
-<div>
+<style>
+    .forum.table > tbody > tr > td {
+        vertical-align: middle;
+    }
+    
+    .forum .fa {
+        width: 1em;
+        text-align: center;
+    }
+    
+    .forum.table th.cell-stat {
+        width: 6em;
+    }
+    
+    .forum.table th.cell-stat-2x {
+        width: 14em;
+    }
+
+</style>
+<div class="container" style="margin-top: 35px">
+    <div class="page-header page-heading">
+        <h1 class="pull-left">FeedMe v1.01</h1>
+        <div class="clearfix"></div>
+    </div>
     <form name="newThreadForm">
-        <input type="text" ng-model="title" placeholder="New thread title..." required/>
-        <input type="text" ng-model="cookie" readonly/>
-        <button ng-click="createThread(title)">Add Thread</button>
+        <div>
+            <div class="modal-header">
+                <h4 class="modal-title">Add New Hawker Stall</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-2" for="inputTo">Stall Name:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="inputTo" ng-model="title" required/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label class="col-sm-2" for="inputTo">Your Annoymized ID:</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="inputTo" ng-model="cookie" readonly/>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:history.back()" class="btn btn-default pull-right">Go Back</a>
+                <button class="btn btn-primary" ng-disabled="newThreadForm.$invalid" ng-click="createThread(title)">Add</button>
+            </div>
+        </div>
     </form>
 </div>

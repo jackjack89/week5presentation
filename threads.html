@@ -1,16 +1,45 @@
-<div class="navbar navbar-static-top">
-    <h3>FeedMe v1.01</h3>
-    <p>This FULLY FUNCTIONING app prototype allows customers to provide feedback on their mobile phones to hawker stalls via their respective threads (directed there via scanning the QR code at the hawker stall) </p>
-<p>Your annoymized ID is: {{cookie}}</p>
-<p><a ng-href="#/create">New Hawker</a></p>
-<div>
-    <h3>Current Hawkers</h3>
-    <ul>
-        <li ng-repeat="thread in threads">
-            <a ng-href="#/threads/{{thread.$id}}">
-                <span>{{ thread.title }}</span>
-                <span>(by {{ thread.username }})</span>
-            </a>
-        </li>
-    </ul>
+<style>
+    .forum.table > tbody > tr > td {
+        vertical-align: middle;
+    }
+    
+    .forum .fa {
+        width: 1em;
+        text-align: center;
+    }
+    
+    .forum.table th.cell-stat {
+        width: 6em;
+    }
+    
+    .forum.table th.cell-stat-2x {
+        width: 14em;
+    }
+
+</style>
+
+<div class="container" style="margin-top: 35px">
+    <div class="page-header page-heading">
+        <h1 class="pull-left">FeedMe v1.01</h1>
+        <div class="clearfix"></div>
+    </div>
+    <p>Your annoymized ID is: {{cookie}}</p>
+    <p class="lead">This FULLY FUNCTIONING app prototype allows customers to provide feedback on their mobile phones to hawker stalls via their respective threads (directed there via scanning the QR code at the hawker stall). </p>
+    <ol class="breadcrumb pull-left where-am-i">
+        <li>Current Hawkers</li>
+        <li><a ng-href="#/create">New Hawker</a></li>
+    </ol>
+    <br>
+    <br>
+    <br>
+    <div>
+        <ul>
+            <li ng-repeat="thread in threads">
+                <a ng-href="#/threads/{{thread.$id}}">
+                    <span><h4>{{ thread.title }}</span>
+                    <span>(by {{ thread.username }})</h4></span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

@@ -60,7 +60,7 @@ angular.module('FeedMe', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookies
             $cookies.put('clientID', username);
         }
         //$rootScope.cookie = $cookies.get('clientID');
-//        console.log("cookie is " + $rootScope.cookie + ",username is " + username + ", cookies are " + $cookies.getAll());
+        //        console.log("cookie is " + $rootScope.cookie + ",username is " + username + ", cookies are " + $cookies.getAll());
     }
     $scope.init();
             }])
@@ -73,8 +73,7 @@ angular.module('FeedMe', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookies
     $scope.threads.$loaded().then(function (threads) {});
 
     $scope.createThread = function (title) {
-        //        var username = $rootScope.cookie;
-        var username = 'melli';
+        var username = $rootScope.cookie;
         $scope.threads.$add({
             username: username,
             title: title
