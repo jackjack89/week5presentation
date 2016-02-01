@@ -1,17 +1,4 @@
-angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookies', 'angular-uuid']).run(function ($rootScope, $cookies, $window, uuid) {
-    $rootScope.cookie = $cookies.get('clientid');
-    // console.log(uuid.v4());
-    if ($rootScope.cookie === null) {
-        var now = new $window.Date();
-        exp = new $window.Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
-        var username = uuid.v4();
-        $cookies.put('clientid', username, {
-            expires: exp
-        });
-    }
-    $rootScope.cookie = $cookies.get('clientid');
-    console.log("cookie is " + $rootScope.cookie);
-})
+angular.module('FeedMe', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookies', 'angular-uuid'])
 
 .constant('fb', {
     url: 'https://feedmeweek5.firebaseio.com'
@@ -30,7 +17,7 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookie
         })
         .when('/create', {
             templateUrl: 'create.html',
-            controller: 'QRCodeCtrl',
+            controller: 'createCtrl',
             resolve: {
                 threadsRef: function (threadServ) {
                     return threadServ.getThreads()
@@ -54,17 +41,40 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookie
         })
 })
 
-    .controller('threadsCtrl', function ($rootScope,$scope, $firebaseArray, threadsRef, $cookies, $window, uuid) {
+.controller('threadsCtrl', function ($scope, $firebaseArray, threadsRef) {
     $scope.threads = $firebaseArray(threadsRef);
     $scope.threads.$loaded().then(function (threads) {});
 })
 
-    .controller("QRCodeCtrl", function ($rootScope,$scope, $firebaseArray, threadsRef) {
+
+.controller('cookieCtrl', ['$rootScope', '$scope', '$cookies', '$window', 'uuid', function ($rootScope, $scope, $cookies, $window, uuid) {
+    $scope.init = function () {
+        $rootScope.cookie = $cookies.get('clientID');
+        if ($rootScope.cookie == null) {
+            var now = new $window.Date();
+            exp = new $window.Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
+            var username = uuid.v4();
+            $cookies.put('clientid', username, {
+                expires: exp
+            });
+            $cookies.put('clientID', username);
+        }
+        //$rootScope.cookie = $cookies.get('clientID');
+//        console.log("cookie is " + $rootScope.cookie + ",username is " + username + ", cookies are " + $cookies.getAll());
+    }
+    $scope.init();
+            }])
+
+
+
+
+.controller("createCtrl", function ($rootScope, $scope, $firebaseArray, threadsRef) {
     $scope.threads = $firebaseArray(threadsRef);
     $scope.threads.$loaded().then(function (threads) {});
 
     $scope.createThread = function (title) {
-        var username = $rootScope.cookie;
+        //        var username = $rootScope.cookie;
+        var username = 'melli';
         $scope.threads.$add({
             username: username,
             title: title
@@ -73,7 +83,7 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'ngCookie
 
 })
 
-    .controller('threadCtrl', function ($rootScope,$scope, $firebaseArray, $firebaseObject, $location, threadRef, commentsRef) {
+.controller('threadCtrl', function ($rootScope, $scope, $firebaseArray, $firebaseObject, $location, threadRef, commentsRef) {
     var thread = $firebaseObject(threadRef);
     $scope.currentLocation = $location.absUrl();
     thread.$bindTo($scope, 'thread');
