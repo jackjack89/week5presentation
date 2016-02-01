@@ -1,4 +1,4 @@
-angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode','cordovaDeviceModule'])
+angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode', 'cordovaDeviceModule'])
 
 .constant('fb', {
     url: 'https://feedmeweek5.firebaseio.com'
@@ -60,10 +60,7 @@ angular.module('rtfmApp', ['firebase', 'ngRoute', 'monospaced.qrcode','cordovaDe
 
 .controller('threadCtrl', function ($scope, $firebaseArray, $firebaseObject, $location, threadRef, commentsRef) {
     var thread = $firebaseObject(threadRef);
-    //    console.log(threadServ.getThread(thread.id));
-    //    console.log(thread);
     $scope.currentLocation = $location.absUrl();
-    //console.log(currentLocation);
     thread.$bindTo($scope, 'thread');
     $scope.comments = $firebaseArray(commentsRef)
     $scope.createComment = function (username, text) {
